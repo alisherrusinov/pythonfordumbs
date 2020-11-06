@@ -24,3 +24,7 @@ class TimeCodeModel(models.Model):
     start = models.CharField(verbose_name='Старт', max_length=5)
     finish = models.CharField(verbose_name='Конец', max_length=5)
     attached_to = models.ForeignKey(LessonModel, on_delete=models.CASCADE)
+
+class CurrentLesson(models.Model):
+    username = models.CharField(max_length=100)
+    attached_to = models.ForeignKey(LessonModel, on_delete=models.CASCADE)

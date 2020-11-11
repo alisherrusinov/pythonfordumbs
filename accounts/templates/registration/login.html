@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<!-- templates/registration/login.html -->
+{% block content %}
+<h2>Log In</h2>
+{% if form.errors %}
+<p>Неправильный логин или пароль</p>
+{% endif %}
+<form action="{% url 'accounts:log-in' %}" method="post">
+  {{form.as_p}}
+  {%csrf_token%}
+  <input type="hidden" name="next" value="{{next}}"/>
+  <p><input type="submit" value="Войти"></p>
+</form>
+{% endblock content %}
+</body>
+</html>

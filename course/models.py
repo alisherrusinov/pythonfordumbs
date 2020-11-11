@@ -16,14 +16,23 @@ class LessonModel(models.Model):
 
 
 class AttachedLinkModel(models.Model):
-    link = models.URLField(verbose_name='Ссылка')
+    label = models.CharField(verbose_name='Подпись', max_length=300, default='Полезная ссылка')
+    link = models.TextField(verbose_name='Ссылка')
     attached_to = models.ForeignKey(LessonModel, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.attached_to}: {self.label}'
 
 
 class TimeCodeModel(models.Model):
+    label = models.CharField(verbose_name='Подпись', max_length=200, default='Таймкод')
     start = models.CharField(verbose_name='Старт', max_length=5)
     finish = models.CharField(verbose_name='Конец', max_length=5)
     attached_to = models.ForeignKey(LessonModel, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.attached_to}: {self.label}'
+
 
 class CurrentLesson(models.Model):
     username = models.CharField(max_length=100)

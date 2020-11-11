@@ -54,8 +54,8 @@
 
                             <div class="header-bar-menu">
                                 <ul class="flex justify-content-center align-items-center py-2 pt-md-0">
-                                    <li><a href="#">Регистрация</a></li>
-                                    <li><a href="#">Вход</a></li>
+                                    <li><a href="/accounts/registration/">Регистрация</a></li>
+                                    <li><a href="{%url 'accounts:log-in'%}">Вход</a></li>
                                 </ul>
                             </div><!-- .header-bar-menu -->
                         </div><!-- .col -->
@@ -68,7 +68,7 @@
                     <div class="row">
                         <div class="col-9 col-lg-3">
                             <div class="site-branding">
-                                <h1 class="site-title"><a href="index.html" rel="home">PythonForDumbs</a></h1>
+                                <h1 class="site-title"><a href="{%url 'index:index_view'%}" rel="home">PythonForDumbs</a></h1>
                             </div><!-- .site-branding -->
                         </div><!-- .col -->
 

@@ -31,9 +31,19 @@ def lesson_detail(request, lesson_slug):
         if user_less.attached_to.id > lesson.id:
             pass
         else:
-            user_less.attached_to  = lesson
+            user_less.attached_to = lesson
             user_less.save(update_fields=['attached_to'])
-        return HttpResponse(f'{lesson}')
+
+        link_models = lesson.attachedlinkmodel_set.all()
+        links = []
+        for link in link_models:
+            links.append(link.link)
+
+        return render(
+            request,
+            'course/lesson_detail.html',
+            {'title': lesson.title, 'links': links, 'video': lesson.embed_url, 'script': lesson.script}
+        )
     else:
         lesson = get_object_or_404(LessonModel, slug=lesson_slug)
         return HttpResponse('hello')

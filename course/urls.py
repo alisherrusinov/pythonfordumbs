@@ -1,6 +1,9 @@
 from django.urls import path, include
 from .views import index, lesson_detail
+
+app_name = 'course'
+
 urlpatterns = [
     path('', index, name='index'),
-    path('<slug:lesson_slug>', lesson_detail, name='lesson_detail')
+    path('<slug:lesson_slug>', lesson_detail, name='lesson_detail'),
 ]

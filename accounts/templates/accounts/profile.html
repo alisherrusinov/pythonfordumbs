@@ -6,9 +6,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>PythonForDumbs	</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<link rel="stylesheet" href="{% static 'css/index.css' %}">
+	<link rel="stylesheet" href="{%static 'css/index.css'%}">
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap" rel="stylesheet">
+	<!-- <link rel="stylesheet" href="{%static 'css/bootstrap.css' %}"> -->
 
 </head>
 <body>
@@ -33,41 +34,12 @@
 					<a class="nav-link" href="#">О нас<span class="sr-only">(current)</span></a>
 				</li>
 			</ul>
-            {% if user.is_authenticated %}
-                <p class="my-2 my-lg-0 text">Привет, <a href="{%url 'accounts:profile'%}">{{user.username}}</a></p>
-            {% else %}
-                <p class="my-2 my-lg-0"><a href="{% url 'accounts:log-in' %}" role="button" class="btn btn-outline-primary">Войти</a> <span class="text-muted">или</span> <a role="button" class="btn btn-outline-primary">Зарегистрироваться</a></p>
-            {% endif %}
-			
-		
 		</div>
 	</nav>
 	<!-- ТУТ НАЧИНАЕТСЯ САЙТ -->
 	<div class = "container">
-		<div class="row">
-			<div class="col-sm-6 col-md-8 col-xl" style="padding-bottom:5em;">
-				<!-- блок контент -->
-				<div class="row justify-content-center pt-4">
-					<h1 class="text">Учите Питон здесь и сейчас</h1>
-					<h4 class="text-small">PythonForDumbs - это бесплатный онлайн курс обучения программированию на Python</h4>
-					<img src="{%static 'images/hello_world.png'%}" alt="" class="img-fluid">
-				</div>
-				<div class="row">
-					<div class="col-md-4">
-						<h4 class="text-strong">Не нужно ничего скачивать</h4>
-						<p class="text">С PythonForDumbs можно работать прямо из браузера, не парясь об установке всего софта на компьютер</p>
-					</div>
-					<div class="col-md-4">
-						<h4 class="text-strong">Много практики</h4>
-						<p class="text">После прохождения урока можно закрепить знания пройдя тест или решив задачу. Когда вы решите её, мы покажем вам решения других людей и решение создателей</p>
-					</div>
-					<div class="col-md-3">
-						<h4 class="text-strong">Контроль учителя</h4>
-						<p class="text">Ваш учитель может сам составлять для вас тесты и проверять задачи.</p>
-					</div>
-				</div>
-			</div>
-			<!-- блок контент -->
+    {{user.username}}
+    <a href="{%url 'accounts:logout'%}">Выйти</a>
 
     </div>
 </div>
@@ -82,7 +54,7 @@
         	<div class="col-md-2 footer-social animated fadeInDown">
             	<h4>Мы в соцсетях</h4>
             	<ul>
-                	<li><a href="https://vk.com/yzbekindustries" target="_blank">ВКонтакте</a></li>
+                	<li><a href="#">ВКонтакте</a></li>
                 	<li><a href="#">Telegram</a></li>
                 </ul>
             </div>

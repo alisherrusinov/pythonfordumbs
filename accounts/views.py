@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from .forms import LoginForm
 # Create your views here.
 
+
 @login_required
 def profile_view(request):
+    # TODO: инфа о пользователе: школа, учитель, прогресс по курсу.
     return render(request, 'accounts/profile.html')

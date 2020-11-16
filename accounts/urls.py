@@ -8,7 +8,7 @@ app_name = 'accounts'
 urlpatterns = [
     path('login/', auth_views.LoginView.as_view(), name='log-in'),
     path('logout/', auth_views.LogoutView.as_view(
-        next_page='/',
+        next_page=None,
         template_name='registration/logged_out.html',),
          name='logout'),
     path('profile/', profile_view, name='profile')

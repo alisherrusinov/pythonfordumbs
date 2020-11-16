@@ -16,7 +16,7 @@ def index(request):
             curr_lesson = CurrentLesson.objects.get(username=username)
 
         return HttpResponseRedirect(
-            reverse('lesson_detail', kwargs={'lesson_slug': curr_lesson.attached_to.slug})
+            reverse('course:lesson_detail', kwargs={'lesson_slug': curr_lesson.attached_to.slug})
         )
     else:
         return HttpResponse('login first')

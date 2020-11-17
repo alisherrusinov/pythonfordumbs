@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import profile_view
+from .views import profile_view, registration
 from django.contrib.auth import views as auth_views
 
 app_name = 'accounts'
@@ -11,5 +11,6 @@ urlpatterns = [
         next_page=None,
         template_name='registration/logged_out.html',),
          name='logout'),
-    path('profile/', profile_view, name='profile')
+    path('profile/', profile_view, name='profile'),
+    path('register/', registration, name='register')
 ]

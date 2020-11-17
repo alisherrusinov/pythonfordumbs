@@ -30,6 +30,11 @@ class TimeCodeModel(models.Model):
     finish = models.CharField(verbose_name='Конец', max_length=5)
     attached_to = models.ForeignKey(LessonModel, on_delete=models.CASCADE)
 
+    def to_youtube(self):
+        time_int = self.finish
+        time_int = time_int.split(':')
+        time_int = int(time_int[0])*60 + int(time_int[1])
+        return time_int
     def __str__(self):
         return f'{self.attached_to}: {self.label}'
 

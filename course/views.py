@@ -42,7 +42,12 @@ def lesson_detail(request, lesson_slug):
         return render(
             request,
             'course/lesson_detail.html',
-            {'title': lesson.title, 'links': links, 'video': lesson.embed_url, 'script': lesson.script}
+            {'title': lesson.title,
+             'links': links,
+             'video': lesson.embed_url,
+             'script': lesson.script,
+             'lesson': lesson,
+             }
         )
     else:
         lesson = get_object_or_404(LessonModel, slug=lesson_slug)

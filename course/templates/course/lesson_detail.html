@@ -1,4 +1,4 @@
-{% extends 'index/base.html' %}
+{% extends 'course/base.html' %}
 {% load static %}
 {% block title %}
 {{title}}
@@ -26,21 +26,22 @@
 		
 	</script>
 	
-			<div class="row justify-content-center pt-4">
+			<div class="row pt-4">
 				<div class="col-md-8">
 					<div class="embed-responsive embed-responsive-16by9" id='player_div'>
 						<iframe class="embed-responsive-item"  id='player' src="https://www.youtube.com/embed/{{video}}?enablejsapi=1" frameborder="1" allowfullscreen style="border-radius: 15px;"></iframe>
 					</div>
 				</div>
 		</div>
-		<div class="row justify-content-center pt-4">
+		<div class="row pt-4">
 			<div class="col-md-8">
-				<a class="btn btn-outline-secondary btn-lg btn-block" role='button' data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Таймкоды</a>
+				<a class="btn btn-outline-secondary btn-lg btn-block" role='button' data-toggle="collapse" href="#timecodes" role="button" aria-expanded="false" aria-controls="timecodes">Таймкоды</a>
 			</div>
 		</div>
-		<div class="pt-1 collapse multi-collapse" id="multiCollapseExample1">
+		<div class="pt-1 collapse multi-collapse" id="timecodes">
 			{% for code in lesson.timecodemodel_set.all %}
-			<div class="row justify-content-center pt-1">
+			<div class="row pt-1">
+				<div class="col-1"></div>
 				<div class="col-4">
 					<p class="text">{{code.label}}: <a href="#" onclick="payback({{code.to_youtube}});">{{code.start}} : {{code.finish}}</a></p>
 				</div>

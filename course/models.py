@@ -23,6 +23,10 @@ class AttachedLinkModel(models.Model):
     def __str__(self):
         return f'{self.attached_to}: {self.label}'
 
+    class Meta:
+        verbose_name = 'Полезная ссылка'
+        verbose_name_plural = 'Полезные ссылки'
+
 
 class TimeCodeModel(models.Model):
     label = models.CharField(verbose_name='Подпись', max_length=200, default='Таймкод')
@@ -33,12 +37,15 @@ class TimeCodeModel(models.Model):
     def to_youtube(self):
         time_int = self.start
         time_int = time_int.split(':')
-        time_int = int(time_int[0])*60 + int(time_int[1])
+        time_int = int(time_int[0]) * 60 + int(time_int[1])
         return time_int
 
-    
     def __str__(self):
         return f'{self.attached_to}: {self.label}'
+
+    class Meta:
+        verbose_name = 'Таймкод'
+        verbose_name_plural = 'Таймкоды'
 
 
 class CurrentLesson(models.Model):

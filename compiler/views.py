@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponseRedirect
-from .models import TestModel
+from course import models as course_models
+from .models import TestModel, HomeWorkModel
 import os
 
 
@@ -26,13 +27,15 @@ def security_check(code: str):
     return True
 
 
-def editor(request):
+def homework(request, lesson_slug):
     if (request.method == 'POST'):
         code = request.POST.get('code')
         is_secure = security_check(code)
         if (not is_secure):  # Если код небезопасный
             return render(request, 'compiler/editor.html', {'errors': 'Вы шакал сервак мне не надо ломать'})
-        tests = TestModel.objects.all()
+        lesson = course_models.LessonModel.objects.get(slug=lesson_slug)
+        tests = HomeWorkModel.objects.get(attached_to=lesson)
+        tests = tests.testmodel_set.all()
         for test in tests:
             input_text = test.test_input  # request.POST.get('input')
             correct_out = test.test_output

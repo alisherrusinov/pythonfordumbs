@@ -3,6 +3,7 @@ from course import models as course_models
 
 
 class HomeWorkModel(models.Model):
+    decs = models.TextField(default='Описание задачи')
     attached_to = models.ForeignKey(
         course_models.LessonModel,
         on_delete=models.CASCADE,

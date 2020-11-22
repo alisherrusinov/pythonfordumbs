@@ -8,12 +8,20 @@
 <script src="{%static 'js/codemirror.js'%}"></script>
 <script src="{%static 'js/matchbrackets.js'%}"></script>
 <script src="{%static 'js/python.js'%}"></script>
+{% if decs %}
+<p>{{decs}}</p>
+<p>Входные данные: <br> {{test.test_input|linebreaksbr}}</p>
+<p>Вывод:<br>  {{test.test_output|linebreaksbr}}</p>
+{% endif %}
         <form action="#" method="POST">
             {% csrf_token %}
             <label for="code" class="pt-4">Enter your code here</label>
                 <textarea name="code" id="code" cols="30" rows="10" class="form-control"></textarea>
+                {% if sandbox %}
                 <label for="code" class="pt-4">Enter your input data here</label>
                 <textarea name="input" id="" cols="30" rows="10" class="form-control" ></textarea>
+                {% endif %}
+                
                 <div class="pt-2">
                     <button type="submit" class="btn btn-dark pt-2 btn-block" >Отправить</button>
                 </div>

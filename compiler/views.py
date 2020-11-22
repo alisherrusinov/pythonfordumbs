@@ -35,6 +35,8 @@ def homework(request, lesson_slug):
             return render(request, 'compiler/editor.html', {'errors': 'Вы шакал сервак мне не надо ломать'})
         lesson = course_models.LessonModel.objects.get(slug=lesson_slug)
         tests = HomeWorkModel.objects.get(attached_to=lesson)
+        first_test = tests.testmodel_set.all()[0]
+        decs = tests.decs
         tests = tests.testmodel_set.all()
         for test in tests:
             input_text = test.test_input  # request.POST.get('input')
@@ -69,14 +71,48 @@ def homework(request, lesson_slug):
                 if (output == correct_out):
                     continue
                 else:
-                    return render(request, 'compiler/editor.html',
-                                  {'errors': f'Правильный вывод: {correct_out}\nВаш вывод: {output}'}
+                    return render(
+                        request,
+                        'compiler/editor.html',
+                        {
+                            'errors': f'Правильный вывод: {correct_out}\nВаш вывод: {output}',
+                            'decs': decs,
+                            'test': first_test
+                        }
                                   )
             else:
-                return render(request, 'compiler/editor.html', {'output': output, 'errors': errors})
-        return render(request, 'compiler/editor.html', {'output': 'Все тесты пройдены успешно'})
+                return render(
+                    request,
+                    'compiler/editor.html',
+                    {
+                        'output': output,
+                        'errors': errors,
+                        'decs': decs,
+                        'test': test
+                    }
+                )
+        return render(
+            request,
+            'compiler/editor.html',
+            {
+                'output': 'Все тесты пройдены успешно',
+                'decs': decs,
+                'test': test
+            }
+        )
     else:
-        return render(request, 'compiler/editor.html')
+        lesson = course_models.LessonModel.objects.get(slug=lesson_slug)
+        tests = HomeWorkModel.objects.get(attached_to=lesson)
+        test = tests.testmodel_set.all()[0]
+        decs = tests.decs
+        return render(
+            request,
+            'compiler/editor.html',
+            {
+                'decs': decs,
+                'test': test
+            }
+        )
 
 
 def editor_without_tests(request):
@@ -113,8 +149,8 @@ def editor_without_tests(request):
         os.popen(f'rm {error_file}')
 
         if (len(errors) == 0):
-            return render(request, 'compiler/editor.html', {'output': output})
+            return render(request, 'compiler/editor.html', {'output': output, 'sandbox': '1'})
         else:
-            return render(request, 'compiler/editor.html', {'output': output, 'errors': errors})
+            return render(request, 'compiler/editor.html', {'output': output, 'errors': errors, 'sandbox': '1'})
     else:
-        return render(request, 'compiler/editor.html')
+        return render(request, 'compiler/editor.html', {'sandbox': '1'})

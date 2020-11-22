@@ -18,6 +18,11 @@ class HomeWorkModel(models.Model):
         verbose_name = 'Домашка'
         verbose_name_plural = 'Домашки'
 
+class GivenHomeWork(models.Model):
+    var_status = (('done', 'Done'), ('notdone', 'NotDone'))
+    user = models.TextField(max_length=150)
+    lesson = models.ForeignKey(course_models.LessonModel, on_delete=models.CASCADE)
+    status = models.CharField(max_length=50, choices=var_status, default='notdone')
 
 # Create your models here.
 class TestModel(models.Model):

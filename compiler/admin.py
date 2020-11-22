@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import TestModel, HomeWorkModel
+from .models import TestModel, HomeWorkModel, GivenHomeWork
 # Register your models here.
 admin.site.register(TestModel)
 admin.site.register(HomeWorkModel)
+admin.site.register(GivenHomeWork)

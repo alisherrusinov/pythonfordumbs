@@ -4,54 +4,68 @@
 Домашка
 {% endblock title %}
 {% block content %}
-<link rel="stylesheet" href="{%static 'css/codemirror.css'%}"> 
+<link rel="stylesheet" href="{%static 'css/codemirror.css'%}">
 <script src="{%static 'js/codemirror.js'%}"></script>
 <script src="{%static 'js/matchbrackets.js'%}"></script>
 <script src="{%static 'js/python.js'%}"></script>
+{% if status == 'done' %}
+<div class="pt-2">
+    {% if decs %}
+    <p>{{decs}}</p>
+    <p>Входные данные: <br> {{test.test_input|linebreaksbr}}</p>
+    <p>Вывод:<br> {{test.test_output|linebreaksbr}}</p>
+    {% endif %}
+    <h3>Данное дз уже выполнено</h3>
+</div>
+
+{% else %}
 {% if decs %}
 <p>{{decs}}</p>
 <p>Входные данные: <br> {{test.test_input|linebreaksbr}}</p>
-<p>Вывод:<br>  {{test.test_output|linebreaksbr}}</p>
+<p>Вывод:<br> {{test.test_output|linebreaksbr}}</p>
 {% endif %}
-        <form action="#" method="POST">
-            {% csrf_token %}
-            <label for="code" class="pt-4">Enter your code here</label>
-                <textarea name="code" id="code" cols="30" rows="10" class="form-control"></textarea>
-                {% if sandbox %}
-                <label for="code" class="pt-4">Enter your input data here</label>
-                <textarea name="input" id="" cols="30" rows="10" class="form-control" ></textarea>
-                {% endif %}
-                
-                <div class="pt-2">
-                    <button type="submit" class="btn btn-dark pt-2 btn-block" >Отправить</button>
-                </div>
-                
-            </form>
-            {% if output %}
-               <h2>Вывод:</h2>
-               <div class="bg-dark text-white pb-2">
-                <div class="pl-3">{{output|linebreaksbr}}</div>
-               </div>
-            </p>
-            {% endif %}
-            {% if errors %}
-            <p>
-                <h2>Ошибки:</h2>
-                <div class="bg-dark text-white pb-2">
-                 <div class="pl-3">{{errors|linebreaksbr}}</div>
-                </div>
-            </p>
-            </p>
-            {% endif %}
+<form action="#" method="POST">
+    {% csrf_token %}
+    <label for="code" class="pt-4">Enter your code here</label>
+    <textarea name="code" id="code" cols="30" rows="10" class="form-control"></textarea>
+    {% if sandbox %}
+    <label for="code" class="pt-4">Enter your input data here</label>
+    <textarea name="input" id="" cols="30" rows="10" class="form-control"></textarea>
+    {% endif %}
+
+    <div class="pt-2">
+        <button type="submit" class="btn btn-dark pt-2 btn-block">Отправить</button>
     </div>
-    <script>
-      var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-        mode: {name: "python",
-               version: 3,
-               singleLineStringErrors: false},
+
+</form>
+{% if output %}
+<h2>Вывод:</h2>
+<div class="bg-dark text-white pb-2">
+    <div class="pl-3">{{output|linebreaksbr}}</div>
+</div>
+</p>
+{% endif %}
+{% if errors %}
+<p>
+    <h2>Ошибки:</h2>
+    <div class="bg-dark text-white pb-2">
+        <div class="pl-3">{{errors|linebreaksbr}}</div>
+    </div>
+</p>
+</p>
+{% endif %}
+</div>
+<script>
+    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+        mode: {
+            name: "python",
+            version: 3,
+            singleLineStringErrors: false
+        },
         lineNumbers: true,
         indentUnit: 4,
         matchBrackets: true
     });
-    </script>
+</script>
+{% endif %}
 {% endblock content %}

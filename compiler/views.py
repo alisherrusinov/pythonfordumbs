@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponseRedirect
 from course import models as course_models
-from .models import TestModel, HomeWorkModel
+from .models import TestModel, HomeWorkModel, GivenHomeWork
 import os
 
 
@@ -38,6 +38,10 @@ def homework(request, lesson_slug):
         first_test = tests.testmodel_set.all()[0]
         decs = tests.decs
         tests = tests.testmodel_set.all()
+
+        given_hh = GivenHomeWork.objects.get_or_create(user=request.user.username, lesson=lesson)[0]
+        print(given_hh)
+
         for test in tests:
             input_text = test.test_input  # request.POST.get('input')
             correct_out = test.test_output
@@ -91,6 +95,8 @@ def homework(request, lesson_slug):
                         'test': test
                     }
                 )
+        given_hh.status = 'done'
+        given_hh.save()
         return render(
             request,
             'compiler/editor.html',
@@ -105,6 +111,9 @@ def homework(request, lesson_slug):
         tests = HomeWorkModel.objects.get(attached_to=lesson)
         test = tests.testmodel_set.all()[0]
         decs = tests.decs
+        given_hh = GivenHomeWork.objects.get_or_create(user=request.user.username, lesson=lesson)[0]
+        if (given_hh.status == 'done'):
+            return render(request, 'compiler/editor.html', {'status': 'done', 'decs': decs, 'test': test})
         return render(
             request,
             'compiler/editor.html',

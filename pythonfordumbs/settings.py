@@ -26,7 +26,7 @@ SECRET_KEY = '885p0d%s&255gdr5^1myj+t+&i_^@1xrjuv8$rkkbly7o=pi0g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'pythonfordumbs.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': f'{BASE_DIR}/db.sqlite3',
     }
 }
 
@@ -124,3 +124,9 @@ LOGIN_REDIRECT_URL = '/'
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = "/home/yzbekindustries/static/"
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'index', 'static'),
+    os.path.join(BASE_DIR, 'compiler', 'static'),
+    os.path.join(BASE_DIR, 'course', 'static'),
+)

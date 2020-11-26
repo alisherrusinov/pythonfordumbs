@@ -30,6 +30,7 @@ def security_check(code: str):
 def homework(request, lesson_slug):
     if (request.method == 'POST'):
         code = request.POST.get('code')
+        print(code)
         is_secure = security_check(code)
         if (not is_secure):  # Если код небезопасный
             return render(request, 'compiler/editor.html', {'errors': 'Вы шакал сервак мне не надо ломать'})
@@ -75,6 +76,7 @@ def homework(request, lesson_slug):
                 if (output == correct_out):
                     continue
                 else:
+                    print(f'Правильный вывод: {correct_out}\nВаш вывод: {output}')
                     return render(
                         request,
                         'compiler/editor.html',

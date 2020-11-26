@@ -8,54 +8,22 @@
 <script src="{%static 'js/codemirror.js'%}"></script>
 <script src="{%static 'js/matchbrackets.js'%}"></script>
 <script src="{%static 'js/python.js'%}"></script>
-{% if status == 'done' %}
-<div class="pt-2">
-    {% if decs %}
-    <p>{{decs}}</p>
-    <p>Входные данные: <br> {{test.test_input|linebreaksbr}}</p>
-    <p>Вывод:<br> {{test.test_output|linebreaksbr}}</p>
-    {% endif %}
-    <h3>Данное дз уже выполнено</h3>
-</div>
 
-{% else %}
+<link rel="stylesheet" href="{%static 'css/pastel-on-dark.css'%}">
+<link rel="stylesheet" href="{%static 'css/3024-night.css'%}">
+
 {% if decs %}
 <p>{{decs}}</p>
 <p>Входные данные: <br> {{test.test_input|linebreaksbr}}</p>
-<p>Вывод:<br> {{test.test_output|linebreaksbr}}</p>
+<p>Вывод:<br> {{test.test_output|linebreaks}}</p>
 {% endif %}
-<form action="#" method="POST">
-    {% csrf_token %}
-    <label for="code" class="pt-4">Enter your code here</label>
+
+<div class="row">
+  <div class="col-6">
+    <form action="#" method="POST" id='codeform'>
+        {% csrf_token %}
     <textarea name="code" id="code" cols="30" rows="10" class="form-control"></textarea>
-    {% if sandbox %}
-    <label for="code" class="pt-4">Enter your input data here</label>
-    <textarea name="input" id="" cols="30" rows="10" class="form-control"></textarea>
-    {% endif %}
-
-    <div class="pt-2">
-        <button type="submit" class="btn btn-dark pt-2 btn-block">Отправить</button>
-    </div>
-
-</form>
-{% if output %}
-<h2>Вывод:</h2>
-<div class="bg-dark text-white pb-2">
-    <div class="pl-3">{{output|linebreaksbr}}</div>
-</div>
-</p>
-{% endif %}
-{% if errors %}
-<p>
-    <h2>Ошибки:</h2>
-    <div class="bg-dark text-white pb-2">
-        <div class="pl-3">{{errors|linebreaksbr}}</div>
-    </div>
-</p>
-</p>
-{% endif %}
-</div>
-<script>
+    <script type="text/javascript">
     var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
         mode: {
             name: "python",
@@ -64,8 +32,46 @@
         },
         lineNumbers: true,
         indentUnit: 4,
-        matchBrackets: true
+        matchBrackets: true,
+        theme: "pastel-on-dark"
     });
+    </script>
+    <button type="submit"  onclick="" class="btn btn-dark pt-2 btn-block">Отправить</button>
+    </form>
+  </div>
+  <div class="col">
+    <textarea name="" id="output" rows="8" cols="80"></textarea>
+    <script>
+      var outputt = CodeMirror.fromTextArea(document.getElementById("output"), {
+          mode: {
+              name: "text/plain",
+              singleLineStringErrors: false
+          },
+          lineNumbers: false,
+          indentUnit: 4,
+          matchBrackets: true,
+          theme: "3024-night",
+          readOnly: true,
+      });
+    </script>
+  </div>
+
+</div>
+<div class="pt-2">
+    
+</div>
+
+</div>
+</div>
+{% if output %}
+<script>
+    outputt.setValue("{{output|escapejs}}")
 </script>
 {% endif %}
+{% if errors %}
+<script>
+    outputt.setValue("{{errors|escapejs}}")
+</script>
+{% endif %}
+
 {% endblock content %}

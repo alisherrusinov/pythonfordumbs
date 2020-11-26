@@ -17,60 +17,60 @@
 <p>Входные данные: <br> {{test.test_input|linebreaksbr}}</p>
 <p>Вывод:<br> {{test.test_output|linebreaks}}</p>
 {% endif %}
-
-<div class="row">
-  <div class="col-6">
-    <form action="#" method="POST" id='codeform'>
-        {% csrf_token %}
-    <textarea name="code" id="code" cols="30" rows="10" class="form-control"></textarea>
-    <script type="text/javascript">
-    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-        mode: {
+<form action="#" method="POST" id='codeform'>
+  <div class="row">
+    <div class="col-sm-12 col-md-6">
+      {% csrf_token %}
+      <textarea name="code" id="code" cols="30" rows="10" class="form-control">{% if code %}{{code}}{% endif %}</textarea>
+      <script type="text/javascript">
+        var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+          mode: {
             name: "python",
             version: 3,
             singleLineStringErrors: false
-        },
-        lineNumbers: true,
-        indentUnit: 4,
-        matchBrackets: true,
-        theme: "pastel-on-dark"
-    });
-    </script>
-    <button type="submit"  onclick="" class="btn btn-dark pt-2 btn-block">Отправить</button>
-    </form>
-  </div>
-  <div class="col">
-    <textarea name="" id="output" rows="8" cols="80"></textarea>
-    <script>
-      var outputt = CodeMirror.fromTextArea(document.getElementById("output"), {
+          },
+          lineNumbers: true,
+          indentUnit: 4,
+          matchBrackets: true,
+          theme: "pastel-on-dark"
+        });
+      </script>
+
+
+    </div>
+    <div class="col-sm-12 col-md-6">
+      <textarea name="" id="output" rows="8" cols="80"></textarea>
+      <script>
+        var outputt = CodeMirror.fromTextArea(document.getElementById("output"), {
           mode: {
-              name: "text/plain",
-              singleLineStringErrors: false
+            name: "text/plain",
+            singleLineStringErrors: false
           },
           lineNumbers: false,
           indentUnit: 4,
           matchBrackets: true,
           theme: "3024-night",
           readOnly: true,
-      });
-    </script>
+        });
+      </script>
+    </div>
+
+  </div>
+  <div class="pt-2">
+    <button type="submit" onclick="" class="btn btn-dark pt-2 btn-block">Отправить</button>
   </div>
 
-</div>
-<div class="pt-2">
-    
-</div>
-
-</div>
-</div>
+  </div>
+  </div>
+</form>
 {% if output %}
 <script>
-    outputt.setValue("{{output|escapejs}}")
+  outputt.setValue("{{output|escapejs}}")
 </script>
 {% endif %}
 {% if errors %}
 <script>
-    outputt.setValue("{{errors|escapejs}}")
+  outputt.setValue("{{errors|escapejs}}")
 </script>
 {% endif %}
 

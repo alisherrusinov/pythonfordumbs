@@ -30,7 +30,6 @@ def security_check(code: str):
 def homework(request, lesson_slug):
     if (request.method == 'POST'):
         code = request.POST.get('code')
-        print(code)
         is_secure = security_check(code)
         if (not is_secure):  # Если код небезопасный
             return render(request, 'compiler/editor.html', {'errors': 'Вы шакал сервак мне не надо ломать'})
@@ -41,7 +40,6 @@ def homework(request, lesson_slug):
         tests = tests.testmodel_set.all()
 
         given_hh = GivenHomeWork.objects.get_or_create(user=request.user.username, lesson=lesson)[0]
-        print(given_hh)
 
         for test in tests:
             input_text = test.test_input  # request.POST.get('input')
@@ -76,12 +74,12 @@ def homework(request, lesson_slug):
                 if (output == correct_out):
                     continue
                 else:
-                    print(f'Правильный вывод: {correct_out}\nВаш вывод: {output}')
                     return render(
                         request,
                         'compiler/editor.html',
                         {
-                            'errors': f'Правильный вывод: {correct_out}\nВаш вывод: {output}',
+                            'code': code,
+                            'errors': f'Правильный вывод:\n{correct_out}\nВаш вывод:\n{output}',
                             'decs': decs,
                             'test': first_test
                         }
@@ -91,6 +89,7 @@ def homework(request, lesson_slug):
                     request,
                     'compiler/editor.html',
                     {
+                        'code': code,
                         'output': output,
                         'errors': errors,
                         'decs': decs,

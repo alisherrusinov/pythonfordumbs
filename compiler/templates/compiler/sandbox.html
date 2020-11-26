@@ -1,0 +1,74 @@
+{% extends 'index/base.html' %}
+{% load static %}
+{% block title %}
+Редактор кода
+{% endblock title %}
+{% block content %}
+<link rel="stylesheet" href="{%static 'css/codemirror.css'%}">
+<script src="{%static 'js/codemirror.js'%}"></script>
+<script src="{%static 'js/matchbrackets.js'%}"></script>
+<script src="{%static 'js/python.js'%}"></script>
+
+<script src="{%static 'js/brython-runner.bundle.js'%}"></script>
+<script src="{%static 'js/sandbox.js'%}"></script>
+<script src="{%static 'js/fullscreen.js'%}"></script>
+
+<link rel="stylesheet" href="{%static 'css/pastel-on-dark.css'%}">
+<link rel="stylesheet" href="{%static 'css/3024-night.css'%}">
+<link rel="stylesheet" href="{%static 'css/fullscreen.css'%}">
+
+
+<div class="row pt-2">
+  <div class="col-sm-12 col-md-6 ">
+    <textarea name="code" id="code" cols="30" rows="100" class="form-control" style="height: auto"></textarea>
+    <script type="text/javascript">
+    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+        mode: {
+            name: "python",
+            version: 3,
+            singleLineStringErrors: false
+        },
+        extraKeys: {
+        "F11": function(cm) {
+          cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+        },
+        "Esc": function(cm) {
+          if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+        }
+      },
+        lineNumbers: true,
+        indentUnit: 4,
+        matchBrackets: true,
+        theme: "pastel-on-dark",
+        viewportMargin: 40,
+    });
+    editor.setSize(null,500)
+    </script>
+  </div>
+  <div class="ol-sm-12 col-md-6 ">
+    <textarea name="" id="output" rows="100" cols="80"></textarea>
+    <script>
+      var output = CodeMirror.fromTextArea(document.getElementById("output"), {
+          mode: {
+              name: "text/plain",
+              singleLineStringErrors: false
+          },
+          lineNumbers: false,
+          indentUnit: 4,
+          matchBrackets: true,
+          theme: "3024-night",
+          readOnly: true,
+      });
+      output.setSize(null,500)
+    </script>
+  </div>
+
+</div>
+<div class="pt-2">
+    <button type="submit"  onclick="custom_run()" class="btn btn-dark pt-2 btn-block">Запустить</button>
+</div>
+
+</div>
+</div>
+
+{% endblock content %}

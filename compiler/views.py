@@ -126,42 +126,5 @@ def homework(request, lesson_slug):
         )
 
 
-def editor_without_tests(request):
-    if (request.method == 'POST'):
-        code = request.POST.get('code')
-        is_secure = security_check(code)
-        if (not is_secure):  # Если код небезопасный
-            return render(request, 'compiler/editor.html', {'errors': 'Вы шакал сервак мне не надо ломать'})
-
-        input_text = request.POST.get('input')
-
-        file_name = 'testing.py'
-        input_file = 'input.txt'
-        error_file = 'error.txt'
-
-        command = f'python3 {file_name} < {input_file} 2> {error_file}'
-
-        file_code = open(file_name, 'w+')
-        file_code.write(code)
-        file_code.close()
-
-        file_input = open(input_file, 'w+')
-        file_input.write(input_text)
-        file_input.close()
-
-        os.popen(f'touch {error_file}')  # создать файл для вывода ошибок
-
-        output = os.popen(command).read()
-        file_error = open(error_file, 'r')
-        errors = file_error.read()
-
-        os.popen(f'rm {file_name}')
-        os.popen(f'rm {input_file}')
-        os.popen(f'rm {error_file}')
-
-        if (len(errors) == 0):
-            return render(request, 'compiler/editor.html', {'output': output, 'sandbox': '1'})
-        else:
-            return render(request, 'compiler/editor.html', {'output': output, 'errors': errors, 'sandbox': '1'})
-    else:
-        return render(request, 'compiler/editor.html', {'sandbox': '1'})
+def sandbox(request):
+    return render(request, 'compiler/sandbox.html')
